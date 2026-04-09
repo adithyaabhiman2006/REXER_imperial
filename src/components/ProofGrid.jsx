@@ -137,7 +137,7 @@ function AuthorityCard({ inView }) {
   return (
     <TiltCard>
       <div className="proof-icon-wrap gold">
-        <Youtube size={22} />
+        <Video size={22} />
       </div>
       <span className="proof-tag gold">Authority</span>
       <h3 className="proof-title">60,000+ YouTube Subscribers</h3>
