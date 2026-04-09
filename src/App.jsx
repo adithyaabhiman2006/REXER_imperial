@@ -6,7 +6,7 @@
  *   4. Navbar
  *   5. Main page sections: Hero → ProofGrid → Services → Footer
  */
-import { useState, useCallback } from 'react'
+import { useState, useCallback, Component } from 'react'
 import SecurityScanBoot    from './components/SecurityScanBoot'
 import MagneticCursor      from './components/MagneticCursor'
 import DataStreamBackground from './components/DataStreamBackground'
@@ -16,6 +16,15 @@ import ProofGrid           from './components/ProofGrid'
 import Services            from './components/Services'
 import Footer              from './components/Footer'
 
+class ErrorBoundary extends Component {
+  constructor(props) { super(props); this.state = { hasError: false, error: null }; }
+  static getDerivedStateFromError(error) { return { hasError: true, error }; }
+  render() {
+    if (this.state.hasError) return <div style={{padding: '50px', color: 'red'}}><h1>CRASH:</h1><pre>{this.state.error?.toString()}</pre></div>;
+    return this.props.children;
+  }
+}
+
 export default function App() {
   const [booting, setBooting] = useState(true)
 
@@ -24,7 +33,7 @@ export default function App() {
   }, [])
 
   return (
-    <>
+    <ErrorBoundary>
       {/* ── Custom magnetic cursor (always rendered) ── */}
       <MagneticCursor />
 
@@ -57,6 +66,6 @@ export default function App() {
           <Footer />
         </>
       )}
-    </>
+    </ErrorBoundary>
   )
 }
